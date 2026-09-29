@@ -1,0 +1,17 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: index.html exists
+        run: test -f index.html
+      - name: HTML sanity check
+        run: |
+          grep -q "</html>" index.html
+          grep -q "Bedtime" index.html
+          echo "OK: $(wc -c < index.html) bytes"
